@@ -27,7 +27,12 @@ export function Nav() {
             <li key={href}>
               <Link
                 href={href}
-                className="rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-700 hover:bg-zinc-100 sm:px-3 sm:text-sm"
+                aria-current={pathname === href ? "page" : undefined}
+                className={`rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide hover:bg-zinc-100 sm:px-3 sm:text-sm ${
+                  pathname === href
+                    ? "bg-zinc-100 text-zinc-900"
+                    : "text-zinc-700"
+                }`}
                 onClick={(event) => {
                   if (href === "/" && pathname === "/") {
                     event.preventDefault();
