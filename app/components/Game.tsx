@@ -211,7 +211,7 @@ export function Game() {
           </button>
         </div>
       ) : (
-        <form className="mt-4 space-y-3" onSubmit={onSubmit}>
+        <form className="mt-10 space-y-3" onSubmit={onSubmit}>
           {message ? (
             <p className="text-sm text-amber-800" role="status">
               {message}

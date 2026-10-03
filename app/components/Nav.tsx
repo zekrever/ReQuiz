@@ -14,7 +14,7 @@ export function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-zinc-200 bg-white">
+    <header className="border-b border-zinc-800 bg-black bg-[url('/navbar-bg.png')] bg-cover bg-center text-white">
       <nav
         aria-label="Primary"
         className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3"
@@ -28,10 +28,10 @@ export function Nav() {
               <Link
                 href={href}
                 aria-current={pathname === href ? "page" : undefined}
-                className={`rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide hover:bg-zinc-100 sm:px-3 sm:text-sm ${
+                className={`rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide hover:bg-zinc-800 sm:px-3 sm:text-sm ${
                   pathname === href
-                    ? "bg-zinc-100 text-zinc-900"
-                    : "text-zinc-700"
+                    ? "bg-zinc-800 text-white"
+                    : "text-white"
                 }`}
                 onClick={(event) => {
                   if (href === "/" && pathname === "/") {
