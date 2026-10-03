@@ -66,6 +66,10 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .gold-shine {
+    animation: none;
+  }
+}
+
 /* Wrong-guess shake. */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }

@@ -7,12 +7,34 @@ type Term = { id: string; word: string; description: string };
 
 type LoadKind = "loading" | "error" | "ready";
 
+type CardTheme = "gold" | "classic";
+
+const cardStyles = {
+  gold: {
+    front:
+      "border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('/card-bg.png')] bg-cover bg-center",
+    back: "border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/card-bg.png')] bg-cover bg-center",
+    word: "gold-shine",
+    description: "gold-shine",
+  },
+  classic: {
+    front: "border-zinc-200 bg-white",
+    back: "border-zinc-200 bg-zinc-100",
+    word: "text-zinc-900",
+    description: "text-zinc-800",
+  },
+} as const;
+
+const themes = ["gold", "classic"] as const;
+const fade = "transition-opacity duration-500 motion-reduce:transition-none";
+const show = (on: boolean) => (on ? "opacity-100" : "opacity-0");
+
 export function Records() {
   const [load, setLoad] = useState<LoadKind>("loading");
   const [terms, setTerms] = useState<Term[]>([]);
   const [flipped, setFlipped] = useState<Set<string>>(new Set());
   const [notice, setNotice] = useState<string | null>(null);
-
+  const [theme, setTheme] = useState<CardTheme>("gold");
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -127,9 +149,32 @@ export function Records() {
         </p>
       ) : null}
 
+      <div
+        role="group"
+        aria-label="Card style"
+        className="mt-4 inline-flex rounded-md border border-zinc-300 bg-white p-0.5 text-xs font-medium"
+      >
+        {(["gold", "classic"] as const).map((option) => (
+          <button
+            key={option}
+            type="button"
+            aria-pressed={theme === option}
+            onClick={() => setTheme(option)}
+            className={`rounded px-3 py-1.5 ${
+              theme === option
+                ? "bg-zinc-900 text-white"
+                : "text-zinc-700 hover:bg-zinc-100"
+            }`}
+          >
+            {option === "gold" ? "Black & gold" : "Classic"}
+          </button>
+        ))}
+      </div>
+
       <ul className="mt-6 grid gap-4 sm:grid-cols-2">
         {terms.map((term) => {
           const isFlipped = flipped.has(term.id);
+          const styles = cardStyles[theme];
           return (
             <li key={term.id} className="flex flex-col gap-2">
               <button
@@ -143,24 +188,51 @@ export function Records() {
                 }
                 className="flip-scene h-48 w-full rounded-lg text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
               >
-                <span
-                  className={`flip-card ${isFlipped ? "is-flipped" : ""}`}
-                >
+                <span className={`flip-card ${isFlipped ? "is-flipped" : ""}`}>
+  {/* FRONT */}
+                <span className="flip-face" aria-hidden={isFlipped}>
                   <span
-                    className="flip-face flex items-center justify-center rounded-lg border border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('/card-bg.png')] bg-cover bg-center p-4"
-                    aria-hidden={isFlipped}
-                  >
-                    <span className="gold-shine break-words text-center text-2xl font-semibold tracking-tight">
-                      {term.word}
+                    className={`absolute inset-0 rounded-lg border ${cardStyles.classic.front}`}
+                  />
+                  <span
+                    className={`absolute inset-0 rounded-lg border ${fade} ${cardStyles.gold.front} ${show(theme === "gold")}`}
+                  />
+                  <span className="relative flex h-full items-center justify-center p-4">
+                    <span className="grid text-center">
+                      {themes.map((t) => (
+                        <span
+                          key={t}
+                          className={`col-start-1 row-start-1 break-words text-2xl font-semibold tracking-tight ${fade} ${cardStyles[t].word} ${show(theme === t)}`}
+                        >
+                          {term.word}
+                        </span>
+                      ))}
                     </span>
                   </span>
+                </span>
+
+                {/* BACK */}
+                <span className="flip-face flip-back" aria-hidden={!isFlipped}>
                   <span
-                    className="flip-face flip-back overflow-y-auto rounded-lg border border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/card-bg.png')] bg-cover bg-center p-4 text-sm leading-relaxed"
-                    aria-hidden={!isFlipped}
-                  >
-                    <span className="gold-shine block">{term.description}</span>
+                    className={`absolute inset-0 rounded-lg border ${cardStyles.classic.back}`}
+                  />
+                  <span
+                    className={`absolute inset-0 rounded-lg border ${fade} ${cardStyles.gold.back} ${show(theme === "gold")}`}
+                  />
+                  <span className="relative block h-full overflow-y-auto p-4 text-sm leading-relaxed">
+                    <span className="grid">
+                      {themes.map((t) => (
+                        <span
+                          key={t}
+                          className={`col-start-1 row-start-1 ${fade} ${cardStyles[t].description} ${show(theme === t)}`}
+                        >
+                          {term.description}
+                        </span>
+                      ))}
+                    </span>
                   </span>
                 </span>
+              </span>
               </button>
               <button
                 type="button"
