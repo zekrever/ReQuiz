@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NEW_ROUND_EVENT } from "@/lib/game";
+import Image from "next/image";
 
 const links = [
   { href: "/", label: "PLAY" },
@@ -19,7 +20,17 @@ export function Nav() {
         aria-label="Primary"
         className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3"
       >
-        <Link href="/" className="text-lg font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-lg font-semibold tracking-tight"
+        >
+          <Image
+            src="/logo.png"
+            alt=""
+            width={28}
+            height={28}
+            className="h-7 w-7 rounded-md object-cover"
+          />
           ReQuiz
         </Link>
         <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-2">
