@@ -45,6 +45,34 @@ services:
       migrate:
         condition: service_completed_successfully
 
+  # Host source + lockfile. `npm ci` on start so new package.json deps land in Linux node_modules.
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: deps
+    command:
+      [
+        "sh",
+        "-c",
+        "npm ci --no-audit --no-fund && npx prisma generate && npm run dev -- -H 0.0.0.0 -p 3000",
+      ]
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://requiz:requiz@db:5432/requiz
+      COOKIE_SECURE: "false"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app
+      - requiz_node_modules:/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
   test:
     build:
       context: .
@@ -53,3 +81,4 @@ services:
 
 volumes:
   requiz_pg:
+  requiz_node_modules:

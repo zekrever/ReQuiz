@@ -26,6 +26,14 @@ Open http://localhost:3000. Node, npm, Postgres, Prisma generate, and migrations
 
 Stop with `docker compose down`.
 
+For live reload against the same Postgres, install lockfile dependencies inside the container (Linux `node_modules`) and run Next in watch mode:
+
+```bash
+docker compose --profile dev up --build db migrate dev
+```
+
+`dev` runs `npm ci` on start, so new packages in `package-lock.json` are installed in the `requiz_node_modules` volume without copying host binaries.
+
 To develop on the host instead (Node 20+):
 
 ```bash

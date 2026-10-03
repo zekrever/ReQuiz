@@ -1,6 +1,8 @@
 import { normaliseGuess } from "./text";
 
-export type RoundStatus = "playing" | "won" | "lost";
+export const NEW_ROUND_EVENT = "requiz:new-round";
+
+export type RoundStatus = "playing" | "won" | "lost" | "skipped";
 
 export type RoundState = {
   lives: number;
@@ -99,4 +101,23 @@ export function applyGuess(
       revealedCount: Math.min(state.totalChunks, state.revealedCount + 1),
     },
   };
+}
+
+/** Reveal the term and full description without spending remaining lives. */
+export function skipRound(state: RoundState): RoundState {
+  if (state.status !== "playing") {
+    return state;
+  }
+  return {
+    ...state,
+    revealedCount: state.totalChunks,
+    status: "skipped",
+  };
+}
+
+export function revealedDescription(
+  chunks: string[],
+  revealedCount: number,
+): string {
+  return chunks.slice(0, Math.max(0, revealedCount)).join(" ");
 }

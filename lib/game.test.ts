@@ -3,6 +3,8 @@ import {
   applyGuess,
   DUPLICATE_GUESS_MESSAGE,
   initialRoundState,
+  revealedDescription,
+  skipRound,
   STARTING_LIVES,
 } from "./game";
 import { chunkDescription, normaliseGuess } from "./text";
@@ -87,5 +89,21 @@ describe("applyGuess", () => {
     const again = applyGuess(won.state, "database", NORMALISED);
     expect(again.kind).toBe("correct");
     expect(again.state).toBe(won.state);
+  });
+
+  it("skip reveals every chunk without spending lives", () => {
+    const state = playingState({ lives: 4, revealedCount: 2, totalChunks: 6 });
+    const skipped = skipRound(state);
+    expect(skipped.status).toBe("skipped");
+    expect(skipped.lives).toBe(4);
+    expect(skipped.revealedCount).toBe(6);
+    expect(state.status).toBe("playing");
+    const after = applyGuess(skipped, "anything", NORMALISED);
+    expect(after.state).toBe(skipped);
+  });
+
+  it("joins revealed chunks with spaces", () => {
+    expect(revealedDescription(["one.", "Two more."], 1)).toBe("one.");
+    expect(revealedDescription(["one.", "Two more."], 2)).toBe("one. Two more.");
   });
 });

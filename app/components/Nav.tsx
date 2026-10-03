@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { NEW_ROUND_EVENT } from "@/lib/game";
 
 const links = [
   { href: "/", label: "MAIN" },
@@ -7,6 +11,8 @@ const links = [
 ] as const;
 
 export function Nav() {
+  const pathname = usePathname();
+
   return (
     <header className="border-b border-zinc-200 bg-white">
       <nav
@@ -22,6 +28,12 @@ export function Nav() {
               <Link
                 href={href}
                 className="rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-700 hover:bg-zinc-100 sm:px-3 sm:text-sm"
+                onClick={(event) => {
+                  if (href === "/" && pathname === "/") {
+                    event.preventDefault();
+                    window.dispatchEvent(new Event(NEW_ROUND_EVENT));
+                  }
+                }}
               >
                 {label}
               </Link>
