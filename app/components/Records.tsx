@@ -147,18 +147,18 @@ export function Records() {
                   className={`flip-card ${isFlipped ? "is-flipped" : ""}`}
                 >
                   <span
-                    className="flip-face flex items-center justify-center rounded-lg border border-zinc-200 bg-white p-4"
+                    className="flip-face flex items-center justify-center rounded-lg border border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('/card-bg.png')] bg-cover bg-center p-4"
                     aria-hidden={isFlipped}
                   >
-                    <span className="break-words text-center text-2xl font-semibold tracking-tight">
+                    <span className="gold-shine break-words text-center text-2xl font-semibold tracking-tight">
                       {term.word}
                     </span>
                   </span>
                   <span
-                    className="flip-face flip-back overflow-y-auto rounded-lg border border-zinc-200 bg-zinc-100 p-4 text-sm leading-relaxed text-zinc-800"
+                    className="flip-face flip-back overflow-y-auto rounded-lg border border-[#d4af37]/40 bg-black bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/card-bg.png')] bg-cover bg-center p-4 text-sm leading-relaxed"
                     aria-hidden={!isFlipped}
                   >
-                    {term.description}
+                    <span className="gold-shine block">{term.description}</span>
                   </span>
                 </span>
               </button>
