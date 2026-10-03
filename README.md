@@ -6,14 +6,14 @@ ReQuiz is a short web quiz for memorising terms. You see a description that is g
 
 Built for a hackathon with an education theme: make studying easier.
 
-## Homepage
+# Homepage
 <img width="1512" height="857" alt="Screenshot 2026-10-03 at 6 10 18 pm" src="https://github.com/user-attachments/assets/e3860358-41e2-4509-8746-4be35cfb7df3" />
 
-## Add Word Page
+# Add Word Page
 <img width="1512" height="858" alt="Screenshot 2026-10-03 at 6 10 28 pm" src="https://github.com/user-attachments/assets/85ef40d5-d9be-443f-9388-867d08e866ac" />
 
-## Flashcard Page 
-# Theme: Black and Gold
+# Flashcard Page 
+## Theme: Black and Gold
 <img width="1512" height="857" alt="Screenshot 2026-10-03 at 6 11 01 pm" src="https://github.com/user-attachments/assets/2f613c08-ead7-4bd8-85c7-84813cafc0ac" />
  
 # Theme: Classic
