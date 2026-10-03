@@ -1,14 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NEW_ROUND_EVENT } from "@/lib/game";
-import Image from "next/image";
 
 const links = [
   { href: "/", label: "PLAY" },
   { href: "/submit", label: "ADD WORD" },
-  { href: "/records", label: "CARDS" }
+  { href: "/records", label: "CARDS", icon: "/cards-icon.png" }
 ] as const;
 
 export function Nav() {
@@ -34,12 +34,15 @@ export function Nav() {
           ReQuiz
         </Link>
         <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-2">
-          {links.map(({ href, label }) => (
+          {links.map((link) => {
+            const { href, label } = link;
+            const icon = "icon" in link ? link.icon : undefined;
+            return (
             <li key={href}>
               <Link
                 href={href}
                 aria-current={pathname === href ? "page" : undefined}
-                className={`rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide hover:bg-zinc-800 sm:px-3 sm:text-sm ${
+                className={`inline-flex items-center rounded-md px-2 py-1.5 text-xs font-medium uppercase tracking-wide hover:bg-zinc-800 sm:px-3 sm:text-sm ${
                   pathname === href
                     ? "bg-zinc-800 text-white"
                     : "text-white"
@@ -51,10 +54,20 @@ export function Nav() {
                   }
                 }}
               >
+                {icon ? (
+                  <Image
+                    src={icon}
+                    alt=""
+                    width={22}
+                    height={20}
+                    className="mr-1.5 inline-block h-5 w-auto align-middle"
+                  />
+                ) : null}
                 {label}
               </Link>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </nav>
     </header>
