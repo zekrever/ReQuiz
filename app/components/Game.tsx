@@ -223,6 +223,7 @@ export function Game() {
           <input
             id="guess"
             name="guess"
+            autoFocus
             autoComplete="off"
             autoCorrect="off"
             spellCheck={false}
