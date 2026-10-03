@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { NEW_ROUND_EVENT } from "@/lib/game";
 
 const links = [
-  { href: "/", label: "MAIN" },
-  { href: "/submit", label: "SUBMIT WORD" },
-  { href: "/records", label: "RECORDS" },
+  { href: "/", label: "PLAY" },
+  { href: "/submit", label: "ADD WORD" },
+  { href: "/records", label: "CARDS" }
 ] as const;
 
 export function Nav() {
