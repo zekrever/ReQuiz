@@ -15,7 +15,7 @@ export function Nav() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-zinc-800 bg-black bg-[url('/navbar-bg.png')] bg-cover bg-center text-white">
+    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black bg-[url('/navbar-bg.png')] bg-cover bg-center text-white">
       <nav
         aria-label="Primary"
         className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3"
