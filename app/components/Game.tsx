@@ -12,6 +12,7 @@ import {
   type RoundState,
 } from "@/lib/game";
 import { chunkDescription, normaliseGuess } from "@/lib/text";
+import { playSfx } from "@/lib/sound";
 
 type Term = { id: string; word: string; description: string };
 
@@ -102,6 +103,11 @@ export function Game() {
     }
 
     const result = applyGuess(round, guess, normaliseGuess(term.word));
+    if (result.kind === "miss" || result.kind === "correct" ||
+      result.kind === "lost" || result.kind === "duplicate") {
+      playSfx(result.kind);
+    }
+
     setRound(result.state);
     setMessage(result.message ?? null);
 
