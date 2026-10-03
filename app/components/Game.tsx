@@ -26,6 +26,7 @@ export function Game() {
   const [round, setRound] = useState<RoundState | null>(null);
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [shaking, setShaking] = useState(false);
   const lastFinishedId = useRef<string | undefined>(undefined);
   const currentId = useRef<string | undefined>(undefined);
   const abortRef = useRef<AbortController | null>(null);
@@ -106,6 +107,11 @@ export function Game() {
     if (result.kind === "miss" || result.kind === "correct" ||
       result.kind === "lost" || result.kind === "duplicate") {
       playSfx(result.kind);
+      if (result.kind === "miss" || result.kind === "lost") {
+  // Restart the animation if the previous shake hasn't finished.
+  setShaking(false);
+  requestAnimationFrame(() => setShaking(true));
+}
     }
 
     setRound(result.state);
@@ -185,7 +191,14 @@ export function Game() {
     : revealedDescription(chunks, round.revealedCount);
 
   return (
-    <section>
+    <section
+      className={shaking ? "shake" : undefined}
+      onAnimationEnd={(event) => {
+        if (event.target === event.currentTarget) {
+          setShaking(false);
+        }
+      }}
+    >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <h1 className="text-2xl font-semibold tracking-tight">Play</h1>
         <Lives count={round.lives} />
