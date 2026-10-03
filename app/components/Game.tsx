@@ -142,7 +142,7 @@ export function Game() {
   if (load === "empty") {
     return (
       <section>
-        <h1 className="text-2xl font-semibold tracking-tight">Play</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Guess the term...</h1>
         <p className="mt-4 text-zinc-600">
           This library has no terms. Add one to start a round.
         </p>
@@ -161,7 +161,7 @@ export function Game() {
   if (load === "error") {
     return (
       <section>
-        <h1 className="text-2xl font-semibold tracking-tight">Play</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Guess the term...</h1>
         <p className="mt-4 text-red-700" role="alert">
           {error}
         </p>
@@ -179,7 +179,7 @@ export function Game() {
   if (load === "loading" || !term || !round) {
     return (
       <section>
-        <h1 className="text-2xl font-semibold tracking-tight">Play</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Guess the term...</h1>
         <p className="mt-4 text-zinc-600">Loading a round…</p>
       </section>
     );
@@ -200,7 +200,7 @@ export function Game() {
       }}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">Play</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Guess the term...</h1>
         <Lives count={round.lives} />
       </div>
 
